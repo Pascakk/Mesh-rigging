@@ -6,6 +6,7 @@ public class DrawingScreen : MonoBehaviour
     public GameObject drawPrefab;
     public GameObject RigPrefab;
     public GameObject drawnMeshPrefab;
+    public GameObject lineRendererPrefab;
     GameObject theTrail;
     Plane planeObj;
     List<Vector3> drawnVertices = new List<Vector3>();
@@ -252,6 +253,12 @@ public class DrawingScreen : MonoBehaviour
                     }
                     visitedTriangles.Clear();
                     Debug.Log("Rig " + currentRig.GetComponent<Draggable>().ID + " has " + currentRig.GetComponent<Draggable>().linkedRigs.Count);
+                    // rendering lines
+                    foreach(GameObject rig in currentRig.GetComponent<Draggable>().linkedRigs)
+                    {
+                        GameObject newLine = Instantiate(lineRendererPrefab, new Vector3(0,0,0), Quaternion.identity);
+                        newLine.GetComponent<LineRendererScript>().SetupLine(rig, currentRig);
+                    }
                 }
 
             }
